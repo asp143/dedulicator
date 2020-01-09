@@ -1,1 +1,1 @@
-# dedulicator
+# Removes duplicates from the json files on the data folder.
