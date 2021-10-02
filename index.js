@@ -20,7 +20,7 @@ const folderReader = () => {
         if (files.length > 0) {
             for (const file of files) {
                 console.log(`File found! Now processing: ${file}`);
-                const jsonFile = JSON.parse(fs.readFileSync(`data/${file}`, 'utf8'));
+                const jsonFile = JSON.parse(fs.readFileSync(`${TEST_FOLDER}/${file}`, 'utf8'));
                 const cleanData = dedupe(jsonFile);
                 writeFile(`${OUT_DIR}/${file}`, cleanData);
                 moveFile(`${TEST_FOLDER}/${file}`, `${FINISHED_FOLDER}/${file}`);
