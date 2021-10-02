@@ -1,21 +1,29 @@
 const fs = require('fs');
+require('dotenv').config();
 
-const { writeFile, moveFile, dedupe } = require('./utils/utils');
-
-const testFolder = './data/';
+const { 
+    dedupe,
+    moveFile, 
+    writeFile, 
+} = require('./utils/utils');
+const {
+    OUT_DIR,
+    TEST_FOLDER,
+    FINISHED_FOLDER,
+} = require('./constant/constants');
 
 const folderReader = () => {
     console.log('Reading data folder...');
-    fs.readdir(testFolder, (err, files) => {
+    fs.readdir(TEST_FOLDER, (err, files) => {
         if (err) throw err;
         
         if (files.length > 0) {
             for (const file of files) {
                 console.log(`File found! Now processing: ${file}`);
-                const jsonFile = JSON.parse(fs.readFileSync(`data/${file}`, 'utf8'));
+                const jsonFile = JSON.parse(fs.readFileSync(`${TEST_FOLDER}/${file}`, 'utf8'));
                 const cleanData = dedupe(jsonFile);
-                writeFile(`clean data/${file}`, cleanData);
-                moveFile(`data/${file}`, `done data/${file}`);
+                writeFile(`${OUT_DIR}/${file}`, cleanData);
+                moveFile(`${TEST_FOLDER}/${file}`, `${FINISHED_FOLDER}/${file}`);
                 console.log(`Process done...`);
                 console.log(`Good bye...`);
             }
